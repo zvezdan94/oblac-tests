@@ -20,6 +20,7 @@ interface CycleResult {
   timestamp: string;
   success: boolean;
   faultDetected: boolean;
+  ethercatState: string | null;
   error203f: string | null;
   error603f: string | null;
   encoder2111s4: string | null;
@@ -94,6 +95,7 @@ test(
         timestamp: new Date().toISOString(),
         success: false,
         faultDetected: false,
+        ethercatState: null,
         error203f: null,
         error603f: null,
         encoder2111s4: null,
@@ -106,6 +108,9 @@ test(
       try {
         await psu.on();
         await waitForDevice(device.serialNumber, ENUM_TIMEOUT_MS);
+
+        const { data: ecatState } = await api.devices.getEthercatNetworkState(device.serialNumber);
+        result.ethercatState = ecatState?.state ?? null;
 
         const { data: hwDesc } = await api.devices.getDeviceFile(
           device.serialNumber,
@@ -169,7 +174,7 @@ test(
       appendFileSync(RESULTS_FILE, `${JSON.stringify(result)}\n`);
 
       console.log(
-        `[cycle ${i}/${CYCLE_COUNT}] ${result.success ? 'ok' : 'FAIL'}` +
+        `[cycle ${i}/${CYCLE_COUNT}] ${result.success ? 'ok' : 'FAIL'} ecat=${result.ethercatState}` +
           (result.faultDetected
             ? ` fault 0x603F=${result.error603f} 0x203F=${result.error203f} 0x2111:4=${result.encoder2111s4} 0x2113:4=${result.encoder2113s4}`
             : '') +
