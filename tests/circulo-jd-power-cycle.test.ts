@@ -22,6 +22,8 @@ interface CycleResult {
   faultDetected: boolean;
   error203f: string | null;
   error603f: string | null;
+  encoder2111s4: string | null;
+  encoder2113s4: string | null;
   hardwareDescription: string | null;
   error: string | null;
   durationMs: number;
@@ -94,6 +96,8 @@ test(
         faultDetected: false,
         error203f: null,
         error603f: null,
+        encoder2111s4: null,
+        encoder2113s4: null,
         hardwareDescription: null,
         error: null,
         durationMs: 0,
@@ -132,6 +136,16 @@ test(
             { index: 0x203f, subindex: 1 },
           ]);
           result.error203f = errReportData.parameterValues?.[0]?.stringValue ?? null;
+
+          const { data: enc2111 } = await api.devices.uploadParameter(device.serialNumber, '0x2111', '0x04');
+          if (enc2111?.value !== undefined) {
+            result.encoder2111s4 = `0x${(enc2111.value as number).toString(16).padStart(8, '0')}`;
+          }
+
+          const { data: enc2113 } = await api.devices.uploadParameter(device.serialNumber, '0x2113', '0x04');
+          if (enc2113?.value !== undefined) {
+            result.encoder2113s4 = `0x${(enc2113.value as number).toString(16).padStart(8, '0')}`;
+          }
         }
 
         result.success = true;
@@ -156,7 +170,9 @@ test(
 
       console.log(
         `[cycle ${i}/${CYCLE_COUNT}] ${result.success ? 'ok' : 'FAIL'}` +
-          (result.faultDetected ? ` fault 0x603F=${result.error603f} 0x203F=${result.error203f}` : '') +
+          (result.faultDetected
+            ? ` fault 0x603F=${result.error603f} 0x203F=${result.error203f} 0x2111:4=${result.encoder2111s4} 0x2113:4=${result.encoder2113s4}`
+            : '') +
           (result.error ? ` error="${result.error}"` : '') +
           ` (${result.durationMs}ms)`,
       );
