@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+circulo-jd-power-cycle-results.ndjson
+circulo-jd-power-cycle-stats.json

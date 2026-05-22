@@ -30,6 +30,7 @@ export const testDevices: TestDevice[] = [
     name: 'circulo',
     productName: 'Circulo 7 Safe Motion - 700, Safe Motion, Magnetic Rings (pos.1&2), with port 2 transceivers ',
   },
+  { position: 1, serialNumber: '8603-02-0000224-2544', name: 'circulo-jd', productName: 'Circulo 9 JD' },
 ];
 
 /** SOMANET Node 400 EtherCAT at EtherCAT position 1. */
@@ -38,3 +39,5 @@ export const nodeTestDevice: TestDevice = testDevices[0] as TestDevice;
 export const integroTestDevice: TestDevice = testDevices[1] as TestDevice;
 /** SOMANET Circulo 7 with Safe Motion Module at EtherCAT position 3. */
 export const circuloTestDevice: TestDevice = testDevices[2] as TestDevice;
+/** SOMANET Circulo 9 JD on Zvezdan's desk. */
+export const circuloJdTestDevice: TestDevice = testDevices[3] as TestDevice;

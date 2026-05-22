@@ -32,6 +32,10 @@ export default defineConfig({
       ...(runAll || optional.has('firmware') ? ['tests/circulo-firmware.test.ts'] : []),
       // Optional: pass OPTIONAL_TESTS=jonas (or 'all') to include
       ...(runAll || optional.has('jonas') ? ['tests/jonas.test.ts'] : []),
+      // Optional: pass OPTIONAL_TESTS=jd (or 'all') to include Circulo JD tests
+      ...(runAll || optional.has('jd') ? ['tests/circulo-jd-files.test.ts'] : []),
+      // Optional: pass OPTIONAL_TESTS=power-cycle (or 'all') to include; set POWER_CYCLE_COUNT to override 1000 default
+      ...(runAll || optional.has('power-cycle') ? ['tests/circulo-jd-power-cycle.test.ts'] : []),
     ],
     // Local: 'verbose' for per-test feedback (the streamed [srv]/[api] logs
     // do redraw the test tree, but we accept that noise locally for the detail).

@@ -1,6 +1,6 @@
 services:
   motion-master:
-    image: synapticon/motion-master:v5.5.0
+    image: synapticon/motion-master:v5.5.1
     container_name: motion-master
     network_mode: host
     privileged: true
@@ -14,7 +14,7 @@ services:
     restart: no
 
   motion-master-api:
-    image: synapticon/motion-master-api:v0.0.396
+    image: synapticon/motion-master-api:v0.0.401
     container_name: motion-master-api
     network_mode: host
     depends_on:
@@ -24,7 +24,7 @@ services:
     restart: no
 
   oblac-drives:
-    image: synapticon/oblac-drives:v3.1.1-flatbot.16
+    image: synapticon/oblac-drives:v3.2.0
     container_name: oblac-drives
     depends_on:
       - motion-master
